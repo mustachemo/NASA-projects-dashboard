@@ -1,4 +1,4 @@
-import Authentication from './authentication';
+import LoggedUserProfile from './logged-user-profile';
 import { styled, alpha } from '@mui/material/styles';
 
 import AppBar from '@mui/material/AppBar';
@@ -67,7 +67,7 @@ export default function Navbar() {
           </SearchIconWrapper>
           <StyledInputBase placeholder='Search…' inputProps={{ 'aria-label': 'search' }} />
         </Search>
-        <Authentication />
+        <LoggedUserProfile />
       </Toolbar>
     </AppBar>
   );

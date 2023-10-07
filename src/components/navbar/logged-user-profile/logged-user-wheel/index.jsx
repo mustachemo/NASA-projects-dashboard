@@ -9,7 +9,7 @@ import Typography from '@mui/material/Typography';
 
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
-export default function UserProfile() {
+export default function LoggedUserWheel() {
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
   const handleOpenUserMenu = (event) => {
