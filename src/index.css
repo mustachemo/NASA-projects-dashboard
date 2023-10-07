@@ -1,1 +1,5 @@
 @import url('../node_modules/minireset.css/minireset.css');
+
+body {
+  background-color: #f7fafb;
+}
