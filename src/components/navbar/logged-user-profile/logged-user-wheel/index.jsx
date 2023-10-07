@@ -6,8 +6,7 @@ import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import Typography from '@mui/material/Typography';
-
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+import { auth } from 'src/setup/firebase';
 
 export default function LoggedUserWheel() {
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -42,11 +41,21 @@ export default function LoggedUserWheel() {
         }}
         open={Boolean(anchorElUser)}
         onClose={handleCloseUserMenu}>
-        {settings.map((setting) => (
-          <MenuItem key={setting} onClick={handleCloseUserMenu}>
-            <Typography textAlign='center'>{setting}</Typography>
+        
+          <MenuItem onClick={handleCloseUserMenu}>
+            <Typography textAlign='center'>Profile</Typography>
           </MenuItem>
-        ))}
+          <MenuItem onClick={handleCloseUserMenu}>
+            <Typography textAlign='center'>Account</Typography>
+          </MenuItem>
+          <MenuItem onClick={handleCloseUserMenu}>
+            <Typography textAlign='center'>Dashboard</Typography>
+          </MenuItem>
+          <MenuItem onClick={handleCloseUserMenu}>
+            <Typography onClick={()=>auth.signOut()} textAlign='center'>Logout</Typography>
+          </MenuItem>
+
+        
       </Menu>
     </Box>
   );
