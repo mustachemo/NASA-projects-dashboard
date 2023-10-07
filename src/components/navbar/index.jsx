@@ -1,13 +1,12 @@
 import Authentication from './authentication';
 import { styled, alpha } from '@mui/material/styles';
-import { useAuthState } from 'react-firebase-hooks/auth';
-import { auth } from 'src/setup/firebase';
+
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
-import Button from '@mui/material/Button';
+
 import './index.css';
 
 const Search = styled('div')(({ theme }) => ({
@@ -53,7 +52,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function Navbar() {
-  const [user] = useAuthState(auth);
+  
 
   return (
     <AppBar position='sticky'>
@@ -68,8 +67,7 @@ export default function Navbar() {
           </SearchIconWrapper>
           <StyledInputBase placeholder='Search…' inputProps={{ 'aria-label': 'search' }} />
         </Search>
-
-        {user ? <Authentication /> : <Button color='inherit'>Login</Button>}
+        <Authentication />
       </Toolbar>
     </AppBar>
   );
