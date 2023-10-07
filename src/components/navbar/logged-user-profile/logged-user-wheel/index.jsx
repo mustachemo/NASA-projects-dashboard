@@ -7,9 +7,12 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import Typography from '@mui/material/Typography';
 import { auth } from 'src/setup/firebase';
+import { useAuthState } from 'react-firebase-hooks/auth';
+
 
 export default function LoggedUserWheel() {
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [user] = useAuthState(auth)
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
@@ -23,7 +26,7 @@ export default function LoggedUserWheel() {
     <Box sx={{ flexGrow: 0 }}>
       <Tooltip title='Open settings'>
         <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-          <Avatar alt='Remy Sharp' src='/static/images/avatar/2.jpg' />
+          <Avatar alt='Remy Sharp' src={user.photoURL} />
         </IconButton>
       </Tooltip>
       <Menu
