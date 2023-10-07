@@ -52,14 +52,10 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function Navbar() {
-  
-
   return (
-    <AppBar position='sticky'>
+    <AppBar sx={{ bgcolor: '#222529' }} position='sticky'>
       <Toolbar className='custom-toolbar'>
-        <Typography variant='h6' noWrap component='div' sx={{ display: { xs: 'none', sm: 'block' } }}>
-          Space Devs
-        </Typography>
+        <Typography>Space Devs</Typography>
 
         <Search>
           <SearchIconWrapper>
