@@ -1,4 +1,4 @@
-import * as React from 'react';
+import Authentication from './authentication';
 import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -63,6 +63,7 @@ export default function Navbar() {
         <Typography variant='h6' noWrap component='div' sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}>
           Space Devs
         </Typography>
+
         <Search>
           <SearchIconWrapper>
             <SearchIcon />
@@ -70,34 +71,7 @@ export default function Navbar() {
           <StyledInputBase placeholder='Search…' inputProps={{ 'aria-label': 'search' }} />
         </Search>
 
-        <Box sx={{ flexGrow: 0 }}>
-          <Tooltip title='Open settings'>
-            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-              <Avatar alt='Remy Sharp' src='/static/images/avatar/2.jpg' />
-            </IconButton>
-          </Tooltip>
-          <Menu
-            sx={{ mt: '45px' }}
-            id='menu-appbar'
-            anchorEl={anchorElUser}
-            anchorOrigin={{
-              vertical: 'top',
-              horizontal: 'right',
-            }}
-            keepMounted
-            transformOrigin={{
-              vertical: 'top',
-              horizontal: 'right',
-            }}
-            open={Boolean(anchorElUser)}
-            onClose={handleCloseUserMenu}>
-            {settings.map((setting) => (
-              <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                <Typography textAlign='center'>{setting}</Typography>
-              </MenuItem>
-            ))}
-          </Menu>
-        </Box>
+        <Authentication />
       </Toolbar>
     </AppBar>
   );
