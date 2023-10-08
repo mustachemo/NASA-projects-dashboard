@@ -1,9 +1,18 @@
-import Typography from '@mui/material/Typography'
-import ListItem from "@mui/material/ListItem";
+import { PropTypes } from 'prop-types';
+
+
+import LoggedUserWheel from 'src/components/logged-user-wheel';
+import MessageBody from '../message-body';
 
 
 export default function RightMessage(props) {
     return (
-    <ListItem>{props.message.text}R</ListItem>
+        <>
+            <LoggedUserWheel />
+            <MessageBody message={props.message} />
+        </>
     )
+}
+RightMessage.propTypes = {
+    message: PropTypes.any.isRequired
 }
