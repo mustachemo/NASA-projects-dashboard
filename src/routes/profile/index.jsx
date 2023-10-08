@@ -2,7 +2,7 @@ import { useParams } from "react-router";
 import { db } from "src/setup/firebase";
 import { doc, getDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
-import MediaCard from "./Profile";
+import MediaCard from "./profile";
 
 function Profile() {
   const { userid } = useParams();
@@ -24,7 +24,7 @@ function Profile() {
 
   return (
     <div>
-      <p>{userObj ? <MediaCard /> : <></>}</p>
+      {userObj ? <MediaCard /> : <></>}
     </div>
   );
 }

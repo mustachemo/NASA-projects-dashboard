@@ -7,6 +7,7 @@ import Profile from "src/routes/profile";
 import Create from "src/routes/create";
 import Chats from "src/routes/chats";
 import Chat from "src/routes/chats/chat";
+import Preferences from "src/routes/prefrences" 
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
@@ -48,7 +49,7 @@ const browserRouter = createBrowserRouter([
       },
       {
         path: "preferences/:userid",
-        // element: <Profile />,
+        element: <Preferences />,
       },
     ],
   },
