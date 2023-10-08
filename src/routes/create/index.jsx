@@ -5,9 +5,9 @@ import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import AlertTitle from "@mui/material/AlertTitle";
-import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import Alert from "@mui/material/Alert";
-import styled from "@mui/material/styles/styled";
+
+import "./index.css";
 
 import { db } from "src/setup/firebase";
 import { doc, getDoc, addDoc, collection } from "firebase/firestore";
@@ -16,18 +16,6 @@ import { redirect } from "react-router-dom";
 
 import { auth } from "src/setup/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
-
-const VisuallyHiddenInput = styled("input")({
-  clip: "rect(0 0 0 0)",
-  clipPath: "inset(50%)",
-  height: 1,
-  overflow: "hidden",
-  position: "absolute",
-  bottom: 0,
-  left: 0,
-  whiteSpace: "nowrap",
-  width: 1,
-});
 
 export default function Create() {
   const [warning, setWarning] = useState("");
@@ -89,7 +77,7 @@ export default function Create() {
   }
 
   return (
-    <Container maxWidth="sm">
+    <Container maxWidth="sm" className="form-container">
       <Typography variant="h3" gutterBottom>
         Edit Project
       </Typography>
@@ -169,7 +157,10 @@ export default function Create() {
           />
         )}
       />
-      <Button onClick={handleSubmit} variant="contained">
+      <Button
+        onClick={handleSubmit}
+        variant="contained"
+        style={{ marginTop: "8px" }}>
         Save
       </Button>
       {warning ? (
