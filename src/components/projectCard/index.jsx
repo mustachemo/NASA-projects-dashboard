@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
@@ -7,15 +8,31 @@ import Typography from "@mui/material/Typography";
 import { firestore } from "src/setup/firebase";
 import { collection, getDocs } from "firebase/firestore";
 
-export default async function ProjectCard() {
-  const projects = await getDocs(collection(firestore, "projects"));
-  projects.forEach((doc) => {
-    console.log(`${doc.title} => ${doc.data()}`);
-  });
+import "./index.css";
+
+export default function ProjectCard() {
+  const [projectsData, setProjectsData] = useState([]);
+
+  const truncateText = (text, length) => {
+    return text.length > length ? text.substring(0, length) + "..." : text;
+  };
+
+  useEffect(() => {
+    async function fetchProjects() {
+      const projectsSnapshot = await getDocs(collection(firestore, "projects"));
+      const projectsArray = [];
+      projectsSnapshot.forEach((doc) => {
+        projectsArray.push({ id: doc.id, ...doc.data() });
+      });
+      setProjectsData(projectsArray);
+    }
+
+    fetchProjects();
+  }, []);
 
   return (
     <div>
-      {projects.map((project, index) => (
+      {projectsData.map((project, index) => (
         <Card key={index} sx={{ maxWidth: 345, boxShadow: "5px 5px 15px rgba(0, 0, 0, 0.6)" }}>
           <CardMedia sx={{ height: 140 }} image={project.image} title={project.title} />
           <CardContent>
@@ -23,7 +40,7 @@ export default async function ProjectCard() {
               {project.title}
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              {project.description}
+              {truncateText(project.description, 100)}
             </Typography>
           </CardContent>
           <CardActions>
