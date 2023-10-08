@@ -1,7 +1,13 @@
+import ProjectCard from "src/components/projectCard";
+import "./index.css";
+
 function Home() {
   return (
-    <div>
-      <h1>Home</h1>
+    <div className="container">
+      <div className="projects">
+        <ProjectCard />
+      </div>
+      <div className="contributors">contributors</div>
     </div>
   );
 }
