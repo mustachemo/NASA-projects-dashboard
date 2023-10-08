@@ -1,9 +1,18 @@
-import Typography from '@mui/material/Typography'
-import ListItem from "@mui/material/ListItem";
+import { PropTypes } from 'prop-types';
 
+import PublicUserWheel from 'src/components/public-user-wheel'
+import MessageBody from '../message-body';
 
-export default function RightMessage(props) {
+export default function LeftMessage(props) {
     return (
-    <ListItem>{props.message.text}R</ListItem>
+        <>
+           {props.user ? <PublicUserWheel publicuser={props.user}/>:<>Loading</>}
+            <MessageBody message={props.message} />
+        </>
     )
+}
+
+LeftMessage.propTypes = {
+    user: PropTypes.any.isRequired,
+    message: PropTypes.any.isRequired
 }
