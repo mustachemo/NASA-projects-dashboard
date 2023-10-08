@@ -40,7 +40,7 @@ export default function Chat() {
             }
         }
         
-        
+        if (currChat.messages == undefined) return;
         setMessages(currChat.messages)
     },[param, user, chats])
 
