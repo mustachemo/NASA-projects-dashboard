@@ -1,5 +1,6 @@
 import * as React from "react";
 import { useState } from "react";
+import { useParams } from "react-router-dom";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
@@ -15,39 +16,9 @@ import { doc, getDoc } from "firebase/firestore";
 import { db } from "src/setup/firebase";
 
 export default function MediaCard() {
-  const [user] = useAuthState(auth);
-  const [bio, setBio] = useState("");
-  const [location, setLocation] = useState("");
-  const [skills, setSkills] = useState([]);
+  const id = useParams();
 
-  useEffect(() => {
-    if (user) {
-      const fetchData = async () => {
-        const docRef = doc(db, "users", user.uid);
-        const docSnap = await getDoc(docRef);
-
-        if (docSnap.exists()) {
-          const data = docSnap.data();
-          setBio(data.description || ""); // "apples"
-          setLocation(data.location || ""); // "modesto ca"
-          setSkills(data.skillsets || []); // ["C++"]
-        } else {
-          console.log("No such document!");
-        }
-      };
-
-      fetchData();
-    }
-  }, [user]);
-
-  if (!user) return <></>;
-
-  const handleSave = () => {
-    // Here you can send the updated profile information (bio, location, skills) to your database.
-    console.log("Bio:", bio);
-    console.log("Location:", location);
-    console.log("Skills:", skills);
-  };
+  console.log(`id: ${id.userid}`);
 
   return (
     <div
@@ -62,14 +33,14 @@ export default function MediaCard() {
         <Box display="flex" justifyContent="center" alignItems="center">
           <CardMedia
             sx={{ height: 100, width: 100, borderRadius: "50%" }}
-            image={user.photoURL}
-            title={user.displayName}
+            // image={user.photoURL}
+            // title={user.displayName}
           />
         </Box>
 
         <CardContent>
           <Typography gutterBottom variant="h5" component="div" className="card-name" style={{ textAlign: "center" }}>
-            {user.displayName}
+            {/* {user.displayName} */}
           </Typography>
 
           <Box
@@ -81,13 +52,13 @@ export default function MediaCard() {
             autoComplete="off">
             <CardContent>
               <Typography variant="body1" component="p">
-                <strong>Bio:</strong> {bio}
+                <strong>Bio:</strong>
               </Typography>
               <Typography variant="body1" component="p">
-                <strong>Location:</strong> {location}
+                <strong>Location:</strong>
               </Typography>
               <Typography variant="body1" component="p">
-                <strong>Skills:</strong> {skills.join(", ")}
+                <strong>Skills:</strong>
               </Typography>
             </CardContent>
           </Box>
