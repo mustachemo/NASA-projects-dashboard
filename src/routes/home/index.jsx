@@ -1,3 +1,6 @@
+
+import ProjectCard from "src/components/projectCard";
+import "./index.css";
 import { useEffect, useState } from "react";
 import { collection, query, getDocs } from "firebase/firestore";
 import { db } from "src/setup/firebase";
@@ -23,6 +26,13 @@ function Home() {
   },[])
 
   return (
+// <<<<<<< feature/main-page
+//     <div className="container">
+//       <div className="projects">
+//         <ProjectCard />
+//       </div>
+//       <div className="contributors">contributors</div>
+//     </div>
     <div>
       <h1>Home</h1>
 

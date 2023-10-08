@@ -1,0 +1,25 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-self: center;
+  border: 1px solid black;
+  width: 100%;
+}
+
+.container > *:first-child {
+  border: 1px solid blue;
+  width: 100%;
+  display: grid;
+  grid-gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  place-items: center;
+  padding: 1rem;
+}
+
+.container > *:last-child {
+  border: 1px solid green;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-self: center;
+}
