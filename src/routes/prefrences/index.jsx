@@ -57,20 +57,24 @@ export default function UserProfileForm() {
   useEffect(() => {
     const fetchData = async () => {
       if (currentUserUID) {
-        const docRef = doc(db, "users", currentUserUID); // Corrected to 'firestore'
+        const docRef = doc(db, "users", currentUserUID);
         const docSnap = await getDoc(docRef);
 
         if (docSnap.exists()) {
-          console.log("Document data:", docSnap.data());
-          setUsername(docSnap.data().username);
+          const userData = docSnap.data();
+          setUsername(userData.username || '');
+          setIsPrivate(userData.isPrivate || false);
+          setDescription(userData.description || '');
+          setLocation(userData.location || '');
+          setSkillsets(userData.skillsets || []);
         } else {
           console.log("No such document!");
         }
       }
     };
-
-    fetchData(); // Call the inner function
+    fetchData();
   }, [currentUserUID]);
+
 
   useEffect(() => {
     const fetchSkillsets = async () => {
