@@ -5,7 +5,7 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import { firestore } from "src/setup/firebase";
+import { db } from "src/setup/firebase";
 import { collection, getDoc, getDocs, query, where, doc } from "firebase/firestore";
 import { auth } from "src/setup/firebase";
 import { onAuthStateChanged } from "firebase/auth";
@@ -39,7 +39,7 @@ export default function ProjectCard() {
   useEffect(() => {
     async function fetchUser() {
       if (currentUserUID) {
-        const userRef = doc(firestore, "users", currentUserUID); // Use `doc` instead of `collection`
+        const userRef = doc(db, "users", currentUserUID); // Use `doc` instead of `collection`
         const userSnap = await getDoc(userRef);
 
         if (userSnap.exists()) {
@@ -57,7 +57,7 @@ export default function ProjectCard() {
   useEffect(() => {
     async function fetchProjects() {
       if (username) {
-        const q = query(collection(firestore, "projects"), where("associated_user", "==", username));
+        const q = query(collection(db, "projects"), where("associated_user", "==", username));
 
         const projectsSnapshot = await getDocs(q);
         const projectsArray = [];
