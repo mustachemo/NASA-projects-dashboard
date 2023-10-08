@@ -6,13 +6,13 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import AlertTitle from "@mui/material/AlertTitle";
 import Alert from "@mui/material/Alert";
+import { useNavigate } from "react-router-dom";
 
 import "./index.css";
 
 import { db } from "src/setup/firebase";
 import { doc, getDoc, addDoc, collection } from "firebase/firestore";
 import { useState, useEffect } from "react";
-import { redirect } from "react-router-dom";
 
 import { auth } from "src/setup/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -30,6 +30,9 @@ export default function Create() {
     endDate: "",
     imageURL: "",
   });
+
+  const navigate = useNavigate();
+
   useEffect(() => {
     if (user == undefined) return;
     setProjectObj((obj) => {
@@ -72,8 +75,9 @@ export default function Create() {
       return;
     }
 
-    const docRef = await addDoc(collection(db, "projects"), projectObj);
-    redirect(`/project/${docRef.id}`);
+    // const docRef = await addDoc(collection(db, "projects"), projectObj);
+    await addDoc(collection(db, "projects"), projectObj);
+    navigate(`/`);
   }
 
   return (
