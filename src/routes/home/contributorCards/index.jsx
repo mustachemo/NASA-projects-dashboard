@@ -3,14 +3,14 @@ import { useState, useEffect } from "react";
 import { db, auth } from "src/setup/firebase";
 
 import { collection, getDocs, query } from "firebase/firestore";
-import UserCard from 'src/components/userCard';
+import UserCard from "src/components/userCard";
 
 import "./index.css";
 import { useAuthState } from "react-firebase-hooks/auth";
 
 export default function ContributorCard() {
   const [contributorsData, setContributorsData] = useState([]);
-  const [user] = useAuthState(auth)
+  const [user] = useAuthState(auth);
 
   useEffect(() => {
     async function fetchContributors() {
@@ -24,13 +24,17 @@ export default function ContributorCard() {
     }
 
     fetchContributors();
-  });
+  }, []);
 
   return (
     <div>
-        {contributorsData.map((contributor) => (
-            <UserCard key={contributor.uid} user={contributor} loggedin={contributor.uid===user.uid}/>
-        ))}
+      {user ? (
+        contributorsData.map((contributor) => (
+          <UserCard key={contributor.uid} user={contributor} loggedin={contributor.uid === user.uid} />
+        ))
+      ) : (
+        <p>Log in to see contributors</p>
+      )}
     </div>
   );
 }
