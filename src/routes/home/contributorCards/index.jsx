@@ -27,7 +27,7 @@ export default function ContributorCard() {
   }, []);
 
   return (
-    <div>
+    <div className="contribuotrs-cards">
       {user ? (
         contributorsData.map((contributor) => (
           <UserCard key={contributor.uid} user={contributor} loggedin={contributor.uid === user.uid} />
