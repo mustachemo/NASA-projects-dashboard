@@ -33,27 +33,16 @@ export default function MediaCard() {
   }, [id.userid]);
 
   return (
-    <div
-      className="profile-container"
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        height: "100vh",
-      }}>
+    <div className="profile-container">
       {userObj && ( // Add this conditional check
         <Card sx={{ maxWidth: 345 }} className="card-container">
-          <Box display="flex" justifyContent="center" alignItems="center">
-            <CardMedia
-              sx={{ height: 100, width: 100, borderRadius: "50%" }}
-              image={userObj.photoURL}
-              title={userObj.displayName}
-            />
+          <Box display="flex" justifyContent="center" alignItems="center" style={{ marginTop: "20px" }}>
+            <CardMedia sx={{ height: 100, width: 100, borderRadius: "50%" }} image={userObj.photoURL} />
           </Box>
 
           <CardContent>
             <Typography gutterBottom variant="h5" component="div" className="card-name" style={{ textAlign: "center" }}>
-              {/* {user.displayName} */}
+              {userObj.name}
             </Typography>
 
             <Box
@@ -65,13 +54,26 @@ export default function MediaCard() {
               autoComplete="off">
               <CardContent>
                 <Typography variant="body1" component="p">
-                  <strong>Bio:</strong>
+                  <strong>Email: </strong>
+                  {!userObj.isPrivate ? userObj.email : ""}
                 </Typography>
                 <Typography variant="body1" component="p">
-                  <strong>Location:</strong>
+                  <strong>Location: </strong> {userObj.location ? userObj.location : ""}
                 </Typography>
                 <Typography variant="body1" component="p">
-                  <strong>Skills:</strong>
+                  <strong>Username: </strong> {userObj.username ? userObj.username : ""}
+                </Typography>
+                <Typography variant="body1" component="p">
+                  <strong>Skills: </strong>
+                  {userObj.skillsets ? (
+                    <ul>
+                      {userObj.skillsets.map((skill, index) => (
+                        <li key={index}>{skill}</li>
+                      ))}
+                    </ul>
+                  ) : (
+                    ""
+                  )}
                 </Typography>
               </CardContent>
             </Box>
