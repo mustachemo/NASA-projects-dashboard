@@ -46,7 +46,7 @@ export default function PublicUserWheel(props) {
             <MenuItem component={Link} to={`/profile/${props.publicuser.uid}`} onClick={handleCloseUserMenu}>
               <Typography textAlign='center'>Profile</Typography>
             </MenuItem>
-            <MenuItem onClick={handleCloseUserMenu}>
+            <MenuItem component={Link} to={`/chats/${props.publicuser.uid}`} onClick={handleCloseUserMenu}>
               <Typography textAlign='center'>Message</Typography>
             </MenuItem>
           

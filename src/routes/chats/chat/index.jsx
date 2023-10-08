@@ -5,6 +5,8 @@ import { ChatsContext } from ".."
 import { auth } from 'src/setup/firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 
+import { Navigate } from "react-router-dom";
+
 import { db } from "src/setup/firebase";
 import { addDoc, collection } from "firebase/firestore"
 
@@ -18,14 +20,26 @@ export default function Chat() {
     const chats = useContext(ChatsContext)
     const param = useParams()
     const [messages, setMessages] = useState([])
+    const [redirect, setRedirect] = useState('')
 
     useEffect(()=>{
+        if (param.chatid == redirect) setRedirect('');
+        if (chats.length == 0) return;
         if (!user) return;
-        const currChat = chats.find((chat) => chat.chatid === param.chatid)
-        if (currChat == undefined) { //create chat
-            // addDoc(collection(db, 'chats'), {members:[param.chatid, user.uid]})
-            return;
+        let currChat = chats.find((chat) => chat.chatid === param.chatid)
+        async function makeChat () {
+            const ref = await addDoc(collection(db, 'chats'), {members:[param.chatid, user.uid]})
+            setRedirect(ref.id)
         }
+        if (currChat == undefined) {
+            currChat = chats.find((chat) => {return chat.userid == param.chatid})
+            if (currChat == undefined) {
+                makeChat()
+            } else {
+                setRedirect(currChat.chatid)
+            }
+        }
+        
         
         setMessages(currChat.messages)
     },[param, user, chats])
@@ -39,9 +53,10 @@ export default function Chat() {
     )
 
     return (<>
-    <ul>
-        {dispMessages}
-    </ul>
-    <ComposeMessage chatid={param.chatid}/>
+        <ul>
+            {dispMessages}
+        </ul>
+        <ComposeMessage chatid={param.chatid}/>
+        { redirect ? (<Navigate push to={`/chats/${redirect}`}/>) : null }
     </>)
 }
