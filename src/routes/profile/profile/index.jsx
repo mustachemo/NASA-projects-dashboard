@@ -11,9 +11,7 @@ import { useEffect } from "react";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "src/setup/firebase";
 
-
 import "./index.css";
-
 
 export default function MediaCard() {
   const id = useParams();
