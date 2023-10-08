@@ -1,50 +1,45 @@
-import React, { useEffect, useState } from 'react';
-import FormControl from '@mui/material/FormControl';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import InputLabel from '@mui/material/InputLabel';
-import Input from '@mui/material/Input';
-import FormHelperText from '@mui/material/FormHelperText';
-import Switch from '@mui/material/Switch';
-import TextField from '@mui/material/TextField';
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
-import Paper from '@mui/material/Paper';
-import { styled } from '@mui/material/styles';
-import Button from '@mui/material/Button';
-import {db} from 'src/setup/firebase';
-import {collection, getDoc, addDoc, updateDoc, doc} from 'firebase/firestore';
-import { useAuthState } from 'react-firebase-hooks/auth';
-import { auth } from 'src/setup/firebase'; 
-import { Navigate } from 'react-router-dom'; 
-
-
+import { useEffect, useState } from "react";
+import FormControl from "@mui/material/FormControl";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import InputLabel from "@mui/material/InputLabel";
+import Input from "@mui/material/Input";
+import FormHelperText from "@mui/material/FormHelperText";
+import Switch from "@mui/material/Switch";
+import TextField from "@mui/material/TextField";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import Paper from "@mui/material/Paper";
+import { styled } from "@mui/material/styles";
+import Button from "@mui/material/Button";
+import { db } from "src/setup/firebase";
+import { getDoc, updateDoc, doc } from "firebase/firestore";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "src/setup/firebase";
 
 const DemoPaper = styled(Paper)(({ theme }) => ({
-  width: '70%',
-  margin: 'auto',
+  width: "70%",
+  margin: "auto",
   padding: theme.spacing(2),
   ...theme.typography.body2,
 }));
 
 export default function UserProfileForm() {
   const [isPrivate, setIsPrivate] = useState(false);
-  const [username, setUsername] = useState('');
-  const [description, setDescription] = useState('');
-  const [location, setLocation] = useState('');
+  const [username, setUsername] = useState("");
+  const [description, setDescription] = useState("");
+  const [location, setLocation] = useState("");
   const [skillsets, setSkillsets] = useState([]);
   const [currentUserUID, setCurrentUserUID] = useState(null);
 
   const [user] = useAuthState(auth);
 
-  
-    // // Redirect if user is not logged in
-    // if (!user) {
-    //     return <Navigate to="/" replace={true} />;
-    // }
+  // // Redirect if user is not logged in
+  // if (!user) {
+  //     return <Navigate to="/" replace={true} />;
+  // }
   const [skillsetOptions, setSkillsetOptions] = useState([]);
 
   const [isEditing, setIsEditing] = useState(true); // New state variable for editing mode
-
 
   const handleToggle = (event) => {
     setIsPrivate(event.target.checked);
@@ -62,9 +57,9 @@ export default function UserProfileForm() {
   useEffect(() => {
     const fetchData = async () => {
       if (currentUserUID) {
-        const docRef = doc(db, "users", currentUserUID);  // Corrected to 'firestore'
+        const docRef = doc(db, "users", currentUserUID); // Corrected to 'firestore'
         const docSnap = await getDoc(docRef);
-  
+
         if (docSnap.exists()) {
           console.log("Document data:", docSnap.data());
           setUsername(docSnap.data().username);
@@ -73,8 +68,8 @@ export default function UserProfileForm() {
         }
       }
     };
-  
-    fetchData();  // Call the inner function
+
+    fetchData(); // Call the inner function
   }, [currentUserUID]);
 
   useEffect(() => {
@@ -84,12 +79,12 @@ export default function UserProfileForm() {
       if (snapshot.exists()) {
         const skillsetData = snapshot.data();
         console.log("Skillset Data:", skillsetData);
-  
+
         // Transform the object into an array of objects with a name property
         const transformedSkillsets = Object.keys(skillsetData).map((key) => {
           return { name: skillsetData[key] };
         });
-  
+
         setSkillsetOptions(transformedSkillsets);
       } else {
         console.log("No such document!");
@@ -97,9 +92,6 @@ export default function UserProfileForm() {
     };
     fetchSkillsets();
   }, []);
-  
-  
-  
 
   const handleSubmit = async () => {
     const userData = {
@@ -109,12 +101,12 @@ export default function UserProfileForm() {
       location,
       skillsets,
     };
-  
+
     console.log("User Data for Firebase:", JSON.stringify(userData));
-  
+
     // Document reference to the specific user
-    const userDocRef = doc(db, 'users', currentUserUID);
-  
+    const userDocRef = doc(db, "users", currentUserUID);
+
     // Update the fields
     try {
       await updateDoc(userDocRef, userData);
@@ -123,23 +115,28 @@ export default function UserProfileForm() {
       console.error("Error updating document: ", error);
     }
   };
-  
 
   return (
-    <DemoPaper sx={{ justifyContent: 'center', display: 'flex' }}>
+    <DemoPaper sx={{ justifyContent: "center", display: "flex" }}>
       {isEditing ? (
-        <form onSubmit={(e) => { e.preventDefault(); handleSubmit();}}>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleSubmit();
+          }}>
           <FormControlLabel
-            control={
-              <Switch checked={isPrivate} onChange={handleToggle} />
-            }
+            control={<Switch checked={isPrivate} onChange={handleToggle} />}
             label="Keep my data private"
-            sx={{ justifyContent: 'center', display: 'flex' }}
+            sx={{ justifyContent: "center", display: "flex" }}
           />
 
           <FormControl fullWidth margin="normal">
             <InputLabel htmlFor="username">Username</InputLabel>
-            <Input id="username" value={username} onChange={e => setUsername(e.target.value)} />
+            <Input
+              id="username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
           </FormControl>
 
           <FormControl fullWidth margin="normal">
@@ -150,13 +147,17 @@ export default function UserProfileForm() {
               rows={4}
               variant="outlined"
               value={description}
-              onChange={e => setDescription(e.target.value)}
+              onChange={(e) => setDescription(e.target.value)}
             />
           </FormControl>
 
           <FormControl fullWidth margin="normal">
             <InputLabel htmlFor="location">Location</InputLabel>
-            <Input id="location" value={location} onChange={e => setLocation(e.target.value)} />
+            <Input
+              id="location"
+              value={location}
+              onChange={(e) => setLocation(e.target.value)}
+            />
           </FormControl>
 
           <FormControl fullWidth margin="normal">
@@ -166,12 +167,12 @@ export default function UserProfileForm() {
               id="skillset"
               multiple
               value={skillsets}
-              onChange={e => setSkillsets(e.target.value)}
-            >
+              onChange={(e) => setSkillsets(e.target.value)}>
               {skillsetOptions.map((option, index) => (
-                <MenuItem key={index} value={option.name}>{option.name}</MenuItem>
+                <MenuItem key={index} value={option.name}>
+                  {option.name}
+                </MenuItem>
               ))}
-
             </Select>
 
             <FormHelperText>Select your primary skillsets</FormHelperText>
@@ -181,19 +182,17 @@ export default function UserProfileForm() {
             Submit
           </Button>
         </form>
-        ): 
-        (
+      ) : (
         <div>
           <h2>{username}</h2>
           <p>{description}</p>
           <p>{location}</p>
-          <p>{skillsets.join(', ')}</p>
-          <p>{isPrivate ? 'Private' : 'Public'}</p>
+          <p>{skillsets.join(", ")}</p>
+          <p>{isPrivate ? "Private" : "Public"}</p>
           <Button
             variant="contained"
             color="primary"
-            onClick={() => setIsEditing(true)}
-          >
+            onClick={() => setIsEditing(true)}>
             Edit
           </Button>
         </div>

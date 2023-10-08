@@ -1,4 +1,3 @@
-import * as React from "react";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import Card from "@mui/material/Card";
