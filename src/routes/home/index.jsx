@@ -1,4 +1,4 @@
-import ProjectCard from "src/components/projectCard";
+import ProjectCard from "src/routes/home/projectCard";
 import "./index.css";
 
 function Home() {
