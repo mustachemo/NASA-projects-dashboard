@@ -5,7 +5,6 @@ import { styled, alpha } from '@mui/material/styles';
 import { useContext } from 'react';
 import {SearchQueryContext} from 'src/routes/root'
 import { Link } from 'react-router-dom'
-import './index.css'
 
 const SearchIconWrapper = styled('div')(({ theme }) => ({
     padding: theme.spacing(0, 2),
