@@ -23,15 +23,8 @@ function Profile() {
   }, [userid]);
 
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        flexDirection: "column",
-        marginTop: "2rem",
-      }}>
-      {userObj ? <MediaCard user={userObj} /> : <p>Loading...</p>}
+    <div>
+      <p>{userObj ? <MediaCard/> : <></>}</p>
     </div>
   );
 }
