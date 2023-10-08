@@ -2,31 +2,36 @@ import { useParams } from "react-router";
 import { db } from "src/setup/firebase";
 import { doc, getDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
-import MediaCard from "./Profile";
+import MediaCard from "./profile";
 
 function Profile() {
-  const {userid} = useParams()
-  const [userObj, setUserObj] = useState(null)
+  const { userid } = useParams();
+  const [userObj, setUserObj] = useState(null);
 
-  useEffect(()=>{
+  useEffect(() => {
     const getUser = async () => {
       const docRef = doc(db, "users", userid);
-      console.log(docRef)
       const docSnap = await getDoc(docRef);
 
       if (docSnap.exists()) {
-        setUserObj(docSnap.data())
+        setUserObj(docSnap.data());
       } else {
-        console.log(`userid:${userid} not found`)
+        console.log(`userid:${userid} not found`);
       }
-    }
-    getUser()
-  }, [userid])
-  
+    };
+    getUser();
+  }, [userid]);
 
   return (
-    <div>
-      <p>{userObj ? <MediaCard/> : <></>}</p>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        flexDirection: "column",
+        marginTop: "2rem",
+      }}>
+      {userObj ? <MediaCard user={userObj} /> : <p>Loading...</p>}
     </div>
   );
 }

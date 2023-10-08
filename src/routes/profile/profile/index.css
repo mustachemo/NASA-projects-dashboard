@@ -1,0 +1,15 @@
+.card-name {
+  text-align: center;
+}
+
+.text-box {
+  text-align: center;
+}
+
+.profile-container {
+  display: "flex";
+  flex-direction: "column";
+  justify-content: "center";
+  align-items: "center";
+  padding: 1rem;
+}

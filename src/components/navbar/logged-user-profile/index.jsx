@@ -2,7 +2,7 @@
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from 'src/setup/firebase';
 
-import LoggedUserWheel from './logged-user-wheel';
+import LoggedUserWheel from 'src/components/logged-user-wheel';
 import LoginButton from './login-button'
 
 export default function LoggedUserProfile() {

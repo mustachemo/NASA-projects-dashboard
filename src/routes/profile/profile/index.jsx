@@ -1,91 +1,101 @@
-import * as React from 'react';
-import { useState } from 'react';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import { auth } from 'src/setup/firebase';
-import { useAuthState } from 'react-firebase-hooks/auth';
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
+import { useState } from "react";
+import { useParams } from "react-router-dom";
+import Card from "@mui/material/Card";
+import CardActions from "@mui/material/CardActions";
+import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+import { useEffect } from "react";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "src/setup/firebase";
 
+import "./index.css";
 
 export default function MediaCard() {
-    const [user] = useAuthState(auth);
-    const [bio, setBio] = useState('');
-    const [location, setLocation] = useState('');
-    const [skills, setSkills] = useState('');
+  const id = useParams();
+  const [userObj, setUserObj] = useState(null);
 
-    if (!user) return <></>;
+  console.log(`id: ${id.userid}`);
 
-    const handleSave = () => {
-        // Here you can send the updated profile information (bio, location, skills) to your database.
-        console.log('Bio:', bio);
-        console.log('Location:', location);
-        console.log('Skills:', skills);
+  useEffect(() => {
+    const getUser = async () => {
+      const docRef = doc(db, "users", id.userid);
+      const docSnap = await getDoc(docRef);
+      console.log(`docSnap: ${docSnap}`);
+
+      if (docSnap.exists()) {
+        setUserObj(docSnap.data());
+      } else {
+        console.log(`userid:${id.userid} not found`);
+      }
     };
+    getUser();
+  }, [id.userid]);
 
-    return (
-        <div className='profile-container' style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            height: '100vh'
-        }}>
-            <Card sx={{ maxWidth: 345}} className='card-container'>
-            <Box display="flex" justifyContent="center" alignItems="center">
-                <CardMedia
-                    sx={{ height: 100, width: 100, borderRadius: '50%' }}
-                    image={user.photoURL}
-                    title={user.displayName}
-                />
+  return (
+    <div className="profile-container">
+      {userObj && ( // Add this conditional check
+        <Card sx={{ maxWidth: 345 }} className="card-container">
+          <Box
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            style={{ marginTop: "20px" }}>
+            <CardMedia
+              sx={{ height: 100, width: 100, borderRadius: "50%" }}
+              image={userObj.photoURL}
+            />
+          </Box>
+
+          <CardContent>
+            <Typography
+              gutterBottom
+              variant="h5"
+              component="div"
+              className="card-name"
+              style={{ textAlign: "center" }}>
+              {userObj.name}
+            </Typography>
+
+            <Box
+              component="form"
+              sx={{
+                "& > :not(style)": { m: 1, width: "25ch" },
+              }}
+              noValidate
+              autoComplete="off">
+              <CardContent>
+                <Typography variant="body1" component="p">
+                  <strong>Email: </strong>
+                  {!userObj.isPrivate ? userObj.email : ""}
+                </Typography>
+                <Typography variant="body1" component="p">
+                  <strong>Location: </strong>{" "}
+                  {userObj.location ? userObj.location : ""}
+                </Typography>
+                <Typography variant="body1" component="p">
+                  <strong>Username: </strong>{" "}
+                  {userObj.username ? userObj.username : ""}
+                </Typography>
+                <Typography variant="body1" component="p">
+                  <strong>Skills: </strong>
+                  {userObj.skillsets ? (
+                    <ul>
+                      {userObj.skillsets.map((skill, index) => (
+                        <li key={index}>{skill}</li>
+                      ))}
+                    </ul>
+                  ) : (
+                    ""
+                  )}
+                </Typography>
+              </CardContent>
             </Box>
-
-                <CardContent>
-                    <Typography gutterBottom variant="h5" component="div" className='card-name' style={{ textAlign: 'center' }}>
-                        {user.displayName}
-                    </Typography>
-
-                    <Box
-                        component="form"
-                        sx={{
-                            '& > :not(style)': { m: 1, width: '25ch' },
-                        }}
-                        noValidate
-                        autoComplete="off"
-                    >
-                        <TextField
-                            id="bio"
-                            label="Bio"
-                            multiline
-                            rows={4}
-                            variant="outlined"
-                            value={bio}
-                            onChange={(e) => setBio(e.target.value)}
-                            style={{ width: '250px' }}
-                        />
-                        <TextField
-                            id="location"
-                            label="Location"
-                            value={location}
-                            onChange={(e) => setLocation(e.target.value)}
-                            style={{ width: '250px' }}
-                        />
-                        <TextField
-                            id="skills"
-                            label="Skills"
-                            value={skills}
-                            onChange={(e) => setSkills(e.target.value)}
-                            style={{ width: '250px' }}
-                        />
-                    </Box>
-                </CardContent>
-                <CardActions>
-                    <Button size="small" onClick={handleSave} >Save</Button>
-                </CardActions>
-            </Card>
-        </div>
-    );
+          </CardContent>
+          <CardActions></CardActions>
+        </Card>
+      )}
+    </div>
+  );
 }
