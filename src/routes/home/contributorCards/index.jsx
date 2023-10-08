@@ -18,7 +18,8 @@ export default function ContributorCard() {
       const querySnapshot = await getDocs(q);
       const contributors = [];
       querySnapshot.forEach((doc) => {
-        contributors.push({ uid: doc.id, ...doc.data() });
+        if (doc.id !== user?.uid)
+          contributors.push({ uid: doc.id, ...doc.data() });
       });
       setContributorsData(contributors);
     }
@@ -30,7 +31,11 @@ export default function ContributorCard() {
     <div className="contribuotrs-cards">
       {user ? (
         contributorsData.map((contributor) => (
-          <UserCard key={contributor.uid} user={contributor} loggedin={contributor.uid === user.uid} />
+          <UserCard
+            key={contributor.uid}
+            user={contributor}
+            loggedin={contributor.uid === user.uid}
+          />
         ))
       ) : (
         <p>Log in to see contributors</p>
