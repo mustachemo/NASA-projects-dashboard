@@ -5,12 +5,27 @@ import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { PropTypes } from "prop-types";
+import { deleteDoc, doc } from "firebase/firestore";
+import { db } from "src/setup/firebase";
+
 
 import "./index.css";
 
 export default function ProjectCard(props) {
   const truncateText = (text, length) => {
     return text.length > length ? text.substring(0, length) + "..." : text;
+  };
+
+  const handleDelete = async () => {
+    const projectRef = doc(db, 'projects', props.project.id);
+    
+    try {
+      await deleteDoc(projectRef);
+      console.log(`Project ${props.project.id} deleted`);
+    } catch (error) {
+      console.error("Error deleting project: ", error);
+    }
+    window.location.reload();
   };
 
   return (
@@ -29,8 +44,7 @@ export default function ProjectCard(props) {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small">Delete</Button>
-        <Button size="small">Learn More</Button>
+        <Button size="small" onClick={handleDelete}>Delete</Button>
       </CardActions>
     </Card>
   );
