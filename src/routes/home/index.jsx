@@ -1,15 +1,15 @@
-import ProjectCard from "src/routes/home/projectCard";
-import ContributorCard from "src/routes/home/contributorCard";
+import ProjectCards from "src/routes/home/projectCards";
+import ContributorCards from "src/routes/home/contributorCards";
 import "./index.css";
 
 function Home() {
   return (
     <div className="container">
       <div className="projects">
-        <ProjectCard />
+        <ProjectCards />
       </div>
       <div className="contributors">
-        <ContributorCard />
+        <ContributorCards />
       </div>
     </div>
   );
