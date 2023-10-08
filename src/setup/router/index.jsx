@@ -2,6 +2,7 @@ import Root from 'src/routes/root.jsx';
 import ErrorPage from 'src/routes/error/index.jsx';
 import Home from 'src/routes/home/index.jsx';
 import Test from 'src/routes/test/index.jsx';
+import Search from 'src/routes/search'
 import Profile from 'src/routes/profile/index.jsx';
 
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
@@ -19,6 +20,10 @@ const browserRouter = createBrowserRouter([
       {
         path: 'test',
         element: <Test />,
+      },
+      {
+        path: 'search',
+        element: <Search />,
       },
       {
         path: 'profile/:userid',
