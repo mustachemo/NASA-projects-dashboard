@@ -1,8 +1,11 @@
 import SearchIcon from '@mui/icons-material/Search';
 import InputBase from '@mui/material/InputBase';
+import Button from '@mui/material/Button'
 import { styled, alpha } from '@mui/material/styles';
 import { useContext } from 'react';
 import {SearchQueryContext} from 'src/routes/root'
+import { Link } from 'react-router-dom'
+import './index.css'
 
 const SearchIconWrapper = styled('div')(({ theme }) => ({
     padding: theme.spacing(0, 2),
@@ -51,9 +54,11 @@ export default function NavSearch () {
 
   return (
     <Search>
-      <SearchIconWrapper>
-        <SearchIcon />
-      </SearchIconWrapper>
+      <Button component={Link} to={'/search'}  >
+        <SearchIconWrapper>
+          <SearchIcon />
+        </SearchIconWrapper>
+      </Button>
       <StyledInputBase
         onChange={(e)=>setSearchQuery(e.target.value.toLowerCase())}
         placeholder='Search…'
