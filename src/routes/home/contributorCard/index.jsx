@@ -7,6 +7,7 @@ import { red } from "@mui/material/colors";
 import { db } from "src/setup/firebase";
 import Typography from "@mui/material/Typography";
 import { collection, getDocs, query } from "firebase/firestore";
+import PublicUserWheel from "src/components/public-user-wheel";
 
 import "./index.css";
 
@@ -19,7 +20,7 @@ export default function ContributorCard() {
       const querySnapshot = await getDocs(q);
       const contributors = [];
       querySnapshot.forEach((doc) => {
-        contributors.push({ id: doc.id, ...doc.data() });
+        contributors.push({ uid: doc.id, ...doc.data() });
       });
       setContributorsData(contributors);
     }
@@ -30,12 +31,13 @@ export default function ContributorCard() {
   return (
     <div>
       {contributorsData.map((contributor) => (
-        <Card key={contributor.id} sx={{ maxWidth: 345 }}>
+        <Card key={contributor.uid} sx={{ maxWidth: 345 }}>
           <CardHeader
-            component={Link}
-            to={`profile/${contributor.id}`}
+            // component={Link}
+            // to={`profile/${contributor.id}`}
             className="contributor-card-link"
-            avatar={<Avatar sx={{ bgcolor: red[500] }} aria-label="recipe" src={contributor.photoURL}></Avatar>}
+            // avatar={<Avatar sx={{ bgcolor: red[500] }} aria-label="recipe" src={contributor.photoURL}></Avatar>}
+            avatar={<PublicUserWheel publicuser={contributor} />}
             title={<Typography color="black">{contributor.username}</Typography>}
             subheader={contributor.email}
           />
