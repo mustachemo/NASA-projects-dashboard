@@ -15,6 +15,8 @@ import {db} from 'src/setup/firebase';
 import {collection, getDoc, addDoc, updateDoc, doc} from 'firebase/firestore';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from 'src/setup/firebase'; 
+import { Navigate } from 'react-router-dom'; 
+
 
 
 const DemoPaper = styled(Paper)(({ theme }) => ({
@@ -33,6 +35,12 @@ export default function UserProfileForm() {
   const [currentUserUID, setCurrentUserUID] = useState(null);
 
   const [user] = useAuthState(auth);
+
+  
+    // // Redirect if user is not logged in
+    // if (!user) {
+    //     return <Navigate to="/" replace={true} />;
+    // }
   const [skillsetOptions, setSkillsetOptions] = useState([]);
 
   const [isEditing, setIsEditing] = useState(true); // New state variable for editing mode
