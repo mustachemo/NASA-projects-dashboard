@@ -6,6 +6,8 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { PropTypes } from "prop-types";
 
+import "./index.css";
+
 export default function ProjectCard(props) {
   const truncateText = (text, length) => {
     return text.length > length ? text.substring(0, length) + "..." : text;
@@ -18,7 +20,7 @@ export default function ProjectCard(props) {
         image={props.project.imageURL}
         title={props.project.title}
       />
-      <CardContent>
+      <CardContent className="project-card-content">
         <Typography gutterBottom variant="h5" component="div">
           {props.project.title}
         </Typography>
