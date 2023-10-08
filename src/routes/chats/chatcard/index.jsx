@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 import { doc, getDoc } from 'firebase/firestore';
 import UserCard from 'src/components/userCard';
 import {db} from 'src/setup/firebase'
-import { Link } from 'react-router-dom';
 
 export default function ChatCard(props) {
     const [user, setUser] = useState()
@@ -26,8 +25,7 @@ export default function ChatCard(props) {
     
     return ( <>
     {user ? <UserCard
-      component={Link}
-      to={`/chats/${props.chat.chatid}`}
+      link={`/chats/${props.chat.chatid}`}
       user={user}/> : <></>
     }
 
