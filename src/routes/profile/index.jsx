@@ -5,28 +5,26 @@ import { useEffect, useState } from "react";
 import MediaCard from "./Profile";
 
 function Profile() {
-  const {userid} = useParams()
-  const [userObj, setUserObj] = useState(null)
+  const { userid } = useParams();
+  const [userObj, setUserObj] = useState(null);
 
-  useEffect(()=>{
+  useEffect(() => {
     const getUser = async () => {
       const docRef = doc(db, "users", userid);
       const docSnap = await getDoc(docRef);
 
       if (docSnap.exists()) {
-        setUserObj(docSnap.data())
+        setUserObj(docSnap.data());
       } else {
-        console.log(`userid:${userid} not found`)
+        console.log(`userid:${userid} not found`);
       }
-    }
-    getUser()
-  }, [userid])
-  
+    };
+    getUser();
+  }, [userid]);
 
   return (
     <div>
-      <h1>Profile</h1>
-      <p>{userObj ? <MediaCard/> : <></>}</p>
+      <p>{userObj ? <MediaCard /> : <></>}</p>
     </div>
   );
 }

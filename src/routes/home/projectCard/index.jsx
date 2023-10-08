@@ -43,7 +43,7 @@ export default function ProjectCard() {
         const userSnap = await getDoc(userRef);
 
         if (userSnap.exists()) {
-          setUsername(userSnap.data().username);
+          setUsername(userSnap.data().name);
         } else {
           console.log("No such user!");
         }
