@@ -53,6 +53,7 @@ function Chats() {
             console.log(`Encountered error: ${err}`)
         })
   },[user])
+
   return (
     <Grid container spacing={2}>
         <Grid item xs={4}>
