@@ -1,7 +1,14 @@
 import { useState, useEffect } from "react";
 
 import { db } from "src/setup/firebase";
-import { collection, getDoc, getDocs, query, where, doc } from "firebase/firestore";
+import {
+  collection,
+  getDoc,
+  getDocs,
+  query,
+  where,
+  doc,
+} from "firebase/firestore";
 import { auth } from "src/setup/firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import ProjectCard from "src/components/projectCard";
@@ -12,8 +19,6 @@ export default function ProjectCards() {
   const [projectsData, setProjectsData] = useState([]);
   const [currentUserUID, setCurrentUserUID] = useState(null);
   const [username, setUsername] = useState("");
-
-  
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -51,7 +56,10 @@ export default function ProjectCards() {
   useEffect(() => {
     async function fetchProjects() {
       if (username) {
-        const q = query(collection(db, "projects"), where("associated_user", "==", username));
+        const q = query(
+          collection(db, "projects"),
+          where("associated_user", "==", username)
+        );
 
         const projectsSnapshot = await getDocs(q);
         const projectsArray = [];
@@ -67,7 +75,7 @@ export default function ProjectCards() {
   }, [username]);
 
   return (
-    <div>
+    <div className="project-cards">
       {projectsData.map((project, index) => (
         <ProjectCard key={index} project={project} />
       ))}
