@@ -1,5 +1,5 @@
 import ProjectCard from "src/routes/home/projectCard";
-import ContributorCard from "src/routes/home/contributorCard";
+import ContributorCards from "src/routes/home/contributorCards";
 import "./index.css";
 
 function Home() {
@@ -9,7 +9,7 @@ function Home() {
         <ProjectCard />
       </div>
       <div className="contributors">
-        <ContributorCard />
+        <ContributorCards />
       </div>
     </div>
   );
