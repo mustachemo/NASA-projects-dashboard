@@ -13,7 +13,6 @@ import "./index.css";
 import { db } from "src/setup/firebase";
 import { doc, getDoc, addDoc, collection } from "firebase/firestore";
 import { useState, useEffect } from "react";
-import { redirect } from "react-router-dom";
 
 import { auth } from "src/setup/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
