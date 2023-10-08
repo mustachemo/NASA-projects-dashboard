@@ -1,7 +1,7 @@
 import { PropTypes } from 'prop-types';
 import { useEffect, useState } from 'react';
 import { doc, getDoc } from 'firebase/firestore';
-import PublicUserWheel from 'src/components/public-user-wheel';
+import UserCard from 'src/components/userCard';
 import {db} from 'src/setup/firebase'
 import { Link } from 'react-router-dom';
 
@@ -25,8 +25,12 @@ export default function ChatCard(props) {
     }, [props.chat.userid])
     
     return ( <>
-    {user ? <PublicUserWheel publicuser={user}/> : <></>}
-    <Link to={`/chats/${props.chat.chatid}`}>View</Link>
+    {user ? <UserCard
+      component={Link}
+      to={`/chats/${props.chat.chatid}`}
+      user={user}/> : <></>
+    }
+
     </>
         
     )

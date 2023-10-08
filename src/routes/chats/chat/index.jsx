@@ -10,6 +10,7 @@ import { Navigate } from "react-router-dom";
 import { db } from "src/setup/firebase";
 import { addDoc, collection } from "firebase/firestore"
 
+import List from "@mui/material/List";
 import RightMessage from "./right-message";
 import LeftMessage from "./left-message";
 import ComposeMessage from "./compose-message";
@@ -53,9 +54,9 @@ export default function Chat() {
     )
 
     return (<>
-        <ul>
+        <List>
             {dispMessages}
-        </ul>
+        </List>
         <ComposeMessage chatid={param.chatid}/>
         { redirect ? (<Navigate push to={`/chats/${redirect}`}/>) : null }
     </>)
