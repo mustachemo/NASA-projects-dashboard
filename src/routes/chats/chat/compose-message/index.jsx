@@ -4,6 +4,8 @@ import TextField from '@mui/material/TextField';
 import { serverTimestamp } from 'firebase/firestore';
 
 import { useState } from 'react';
+import { PropTypes } from 'prop-types';
+
 
 import { db } from "src/setup/firebase";
 import { addDoc, collection } from "firebase/firestore"
@@ -19,13 +21,11 @@ export default function ComposeMessage(props) {
     function handleSend() {
         event.preventDefault()
         const col = collection(db, 'chats', props.chatid, 'messages')
-        console.log(col)
-        const ref = addDoc(col, {
+        addDoc(col, {
             text: message,
             sender: user.uid,
             time: serverTimestamp()
         })
-        console.log(ref)
         setMessage('')
     }
 
@@ -42,4 +42,7 @@ export default function ComposeMessage(props) {
         </form>
         </FormControl>
     )
+}
+ComposeMessage.propTypes = {
+    chatid: PropTypes.string.isRequired,
 }
