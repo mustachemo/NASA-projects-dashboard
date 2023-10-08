@@ -6,6 +6,7 @@ import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import Typography from '@mui/material/Typography';
+import { Link } from 'react-router-dom'
 import { PropTypes } from 'prop-types';
 
 export default function PublicUserWheel(props) {
@@ -23,7 +24,7 @@ export default function PublicUserWheel(props) {
       <Box sx={{ flexGrow: 0 }}>
         <Tooltip title='User Actions'>
           <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-            <Avatar alt={props.publicuser.displayName} src={props.publicuser.photoURL} />
+            <Avatar alt={props.publicuser.name} src={props.publicuser.photoURL} />
           </IconButton>
         </Tooltip>
         <Menu
@@ -42,7 +43,7 @@ export default function PublicUserWheel(props) {
           open={Boolean(anchorElUser)}
           onClose={handleCloseUserMenu}>
           
-            <MenuItem onClick={handleCloseUserMenu}>
+            <MenuItem component={Link} to={`/profile/${props.publicuser.uid}`} onClick={handleCloseUserMenu}>
               <Typography textAlign='center'>Profile</Typography>
             </MenuItem>
             <MenuItem onClick={handleCloseUserMenu}>

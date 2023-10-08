@@ -11,7 +11,6 @@ function Profile() {
   useEffect(()=>{
     const getUser = async () => {
       const docRef = doc(db, "users", userid);
-      console.log(docRef)
       const docSnap = await getDoc(docRef);
 
       if (docSnap.exists()) {
