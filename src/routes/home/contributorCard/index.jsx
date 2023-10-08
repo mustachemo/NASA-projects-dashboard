@@ -2,11 +2,13 @@ import { useState, useEffect } from "react";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import Avatar from "@mui/material/Avatar";
-import IconButton from "@mui/material/IconButton";
+import { Link } from "react-router-dom";
 import { red } from "@mui/material/colors";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { db } from "src/setup/firebase";
-import { collection, getDoc, getDocs, query, where, doc } from "firebase/firestore";
+import Typography from "@mui/material/Typography";
+import { collection, getDocs, query } from "firebase/firestore";
+
+import "./index.css";
 
 export default function ContributorCard() {
   const [contributorsData, setContributorsData] = useState([]);
@@ -17,7 +19,7 @@ export default function ContributorCard() {
       const querySnapshot = await getDocs(q);
       const contributors = [];
       querySnapshot.forEach((doc) => {
-        contributors.push(doc.data());
+        contributors.push({ id: doc.id, ...doc.data() });
       });
       setContributorsData(contributors);
     }
@@ -30,17 +32,11 @@ export default function ContributorCard() {
       {contributorsData.map((contributor) => (
         <Card key={contributor.id} sx={{ maxWidth: 345 }}>
           <CardHeader
-            avatar={
-              <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                {contributor.photoURL}
-              </Avatar>
-            }
-            action={
-              <IconButton aria-label="settings">
-                <MoreVertIcon />
-              </IconButton>
-            }
-            title={contributor.username}
+            component={Link}
+            to={`profile/${contributor.id}`}
+            className="contributor-card-link"
+            avatar={<Avatar sx={{ bgcolor: red[500] }} aria-label="recipe" src={contributor.photoURL}></Avatar>}
+            title={<Typography color="black">{contributor.username}</Typography>}
             subheader={contributor.email}
           />
         </Card>
