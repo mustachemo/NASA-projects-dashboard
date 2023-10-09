@@ -1,0 +1,12 @@
+.results {
+    display: flex;
+    flex-direction: row;
+    
+
+}
+
+.results > * {
+    width: 250px;
+    height: 250px;
+    margin: 10px;
+}
