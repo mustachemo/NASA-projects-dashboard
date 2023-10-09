@@ -13,6 +13,6 @@ export default function LeftMessage(props) {
 }
 
 LeftMessage.propTypes = {
-    user: PropTypes.any.isRequired,
-    message: PropTypes.any.isRequired
+    user: PropTypes.any,
+    message: PropTypes.any
 }

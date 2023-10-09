@@ -8,8 +8,8 @@ import MessageBody from '../message-body';
 export default function RightMessage(props) {
     return (
         <>
-            <LoggedUserWheel />
             <MessageBody message={props.message} />
+            <LoggedUserWheel />
         </>
     )
 }

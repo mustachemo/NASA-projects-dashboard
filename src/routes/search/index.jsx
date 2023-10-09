@@ -1,8 +1,12 @@
 import { useEffect, useState, useContext } from "react";
-import { collection, query, where, getDocs } from "firebase/firestore";
+import { collection, query, where, getDocs, or, and } from "firebase/firestore";
 import { db } from "src/setup/firebase";
 import {SearchQueryContext} from 'src/routes/root'
+import ProjectCard from 'src/components/ProjectCard'
+import Box from '@mui/material/Box'
+import Typography from '@mui/material/Typography'
 
+import './index.css'
 
 function Search() {
   const [projects, setProjects] = useState([])
@@ -17,8 +21,14 @@ function Search() {
         default:
           q = query(
             collection(db, "projects"),
-            where('title', '>=', searchQuery),
-            where('title', '<',`${searchQuery}z`)
+            or(
+              and(where('title', '>=', searchQuery),
+              where('title', '<',searchQuery + 'z')),
+              and(where('title', '>=', searchQuery.toUpperCase()),
+              where('title', '<',searchQuery.toUpperCase() + 'z')),
+              and(where('title', '>=', searchQuery.charAt(0).toUpperCase() + searchQuery.slice(1)),
+              where('title', '<', searchQuery.charAt(0).toUpperCase() + searchQuery.slice(1)+ 'z'))
+              )
           )
       }
       
@@ -36,14 +46,14 @@ function Search() {
     getProjects()
   },[searchQuery])
 
-  return (
-    <div>
-      <h1>Home</h1>
-      <h1>{searchQuery}</h1>
-
-      {projects.map((project)=><h1 key={project.id}>{project.title}</h1>)}
-    </div>  
-  );
+  return (<>
+    <Typography variant="h1">Results...</Typography>
+    <Box className="results">
+      {projects.map((project)=>
+        <ProjectCard className="result" key={project.id} project={project} />
+      )}
+    </Box>  
+    </>);
 }
 
 export default Search;

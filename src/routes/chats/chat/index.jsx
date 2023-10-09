@@ -15,6 +15,7 @@ import RightMessage from "./right-message";
 import LeftMessage from "./left-message";
 import ComposeMessage from "./compose-message";
 import ListItem from "@mui/material/ListItem";
+import Typography from "@mui/material/Typography"
 
 import './index.css'
 
@@ -88,6 +89,7 @@ export default function Chat() {
     return (<>
         <List className="messages">
             <ListItem className="compose-message"><ComposeMessage chatid={param.chatid}/></ListItem>
+            {messages.length==0 ?<ListItem><Typography>This is your first message...</Typography></ListItem> : <></>}
             {dispMessages}
         </List>
         

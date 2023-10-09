@@ -43,13 +43,17 @@ export default function ProjectCard(props) {
           {truncateText(props.project.description, 100)}
         </Typography>
       </CardContent>
-      <CardActions>
-        <Button size="small" onClick={handleDelete}>Delete</Button>
-      </CardActions>
+      { props.isOwned ? 
+        <CardActions>
+          <Button size="small" onClick={handleDelete}>Delete</Button>
+        </CardActions> : 
+        <></>
+      }
     </Card>
   );
 }
 
 ProjectCard.propTypes = {
   project: PropTypes.any.isRequired,
+  isOwned: PropTypes.any,
 };
