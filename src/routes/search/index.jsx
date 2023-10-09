@@ -23,9 +23,11 @@ function Search() {
             collection(db, "projects"),
             or(
               and(where('title', '>=', searchQuery),
-              where('title', '<',`${searchQuery}z`)),
+              where('title', '<',searchQuery + 'z')),
               and(where('title', '>=', searchQuery.toUpperCase()),
-              where('title', '<',`${searchQuery.toUpperCase()}z`))
+              where('title', '<',searchQuery.toUpperCase() + 'z')),
+              and(where('title', '>=', searchQuery.charAt(0).toUpperCase() + searchQuery.slice(1)),
+              where('title', '<', searchQuery.charAt(0).toUpperCase() + searchQuery.slice(1)+ 'z'))
               )
           )
       }
