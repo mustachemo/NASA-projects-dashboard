@@ -1,8 +1,17 @@
-# React + Vite
+# NASA Open-Science Competition Project Dashboard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Project Overview
 
-Currently, two official plugins are available:
+This repository hosts the source code for our project dashboard, developed as part of NASA's open-science competition. Our team aimed to create an intuitive and informative dashboard that showcases various projects under NASA's open-science initiative, facilitating easier access to and understanding of the ongoing research and development efforts.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Purpose
+
+The dashboard is designed to serve researchers, educators, and the general public by providing a centralized platform to explore NASA's diverse projects. It includes features like project summaries, status updates, key findings, and links to detailed resources. Our goal is to promote greater transparency, engagement, and collaboration in space science.
+
+## Technology Stack
+
+- **Frontend**: React.js
+- **Backend**: firebase
+- **Database**: firestore
+- **Hosting**: firease
+
